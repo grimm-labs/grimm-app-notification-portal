@@ -7,8 +7,10 @@ import {
   Button,
   Stack,
   ActionIcon,
+  Tooltip,
+  useMantineTheme,
 } from "@mantine/core";
-import { IconSend, IconTrash } from "@tabler/icons-react";
+import { IconSend, IconTrash, IconEdit } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
@@ -16,6 +18,7 @@ interface NotificationCardProps {
   notification: Notification;
   onDelete: (id: string) => void;
   onPublish: (id: string) => void;
+  onEdit: (notification: Notification) => void;
   deleteConfirm: string | null;
   setDeleteConfirm: (id: string | null) => void;
 }
@@ -24,29 +27,47 @@ export function NotificationCard({
   notification,
   onDelete,
   onPublish,
+  onEdit,
   deleteConfirm,
   setDeleteConfirm,
 }: NotificationCardProps) {
+  const theme = useMantineTheme();
   const isDraft = notification.status === "DRAFT";
   const isDeleteConfirm = deleteConfirm === notification.id;
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="lg"
+      withBorder
+      style={{
+        borderLeft: `4px solid ${isDraft ? theme.colors.yellow[5] : theme.colors.green[5]}`,
+        transition: "transform 0.2s, box-shadow 0.2s",
+      }}
+      className="hover-card"
+    >
       <Stack gap="md">
         <Group justify="space-between" align="flex-start">
-          <Text fw={500} size="lg">
-            {notification.title}
-          </Text>
-          <Badge color={isDraft ? "yellow" : "green"} variant="light">
+          <div style={{ flex: 1 }}>
+            <Text fw={600} size="lg" mb={4}>
+              {notification.title}
+            </Text>
+            <Text c="dimmed" size="sm" style={{ lineHeight: 1.4 }}>
+              {notification.body}
+            </Text>
+          </div>
+          <Badge
+            color={isDraft ? "yellow" : "green"}
+            variant="light"
+            size="lg"
+            radius="sm"
+          >
             {isDraft ? "Brouillon" : "Publiée"}
           </Badge>
         </Group>
 
-        <Text c="dimmed" size="sm">
-          {notification.body}
-        </Text>
-
-        <Group justify="space-between">
+        <Group justify="space-between" align="center">
           <Text size="xs" c="dimmed">
             Créée le{" "}
             {format(new Date(notification.createdAt), "dd MMMM yyyy à HH:mm", {
@@ -55,46 +76,71 @@ export function NotificationCard({
           </Text>
 
           <Group gap="xs">
-            {isDraft && (
-              <Button
-                leftSection={<IconSend size={16} />}
-                variant="light"
-                color="blue"
-                size="sm"
-                onClick={() => onPublish(notification.id)}
-              >
-                Publier
-              </Button>
-            )}
+            {isDraft ? (
+              <>
+                <Tooltip label="Modifier la notification">
+                  <ActionIcon
+                    variant="light"
+                    color="blue"
+                    size="lg"
+                    onClick={() => onEdit(notification)}
+                    radius="md"
+                  >
+                    <IconEdit size={16} />
+                  </ActionIcon>
+                </Tooltip>
 
-            {isDeleteConfirm ? (
-              <Group gap="xs">
-                <Button
-                  leftSection={<IconTrash size={16} />}
-                  variant="filled"
-                  color="red"
-                  size="sm"
-                  onClick={() => onDelete(notification.id)}
-                >
-                  Confirmer
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={() => setDeleteConfirm(null)}
-                >
-                  Annuler
-                </Button>
-              </Group>
+                <Tooltip label="Modifier la notification">
+                  <ActionIcon
+                    variant="light"
+                    color="green"
+                    size="lg"
+                    onClick={() => onPublish(notification.id)}
+                    radius="md"
+                  >
+                    <IconSend size={16} />
+                  </ActionIcon>
+                </Tooltip>
+
+                {isDeleteConfirm ? (
+                  <Group gap="xs">
+                    <Button
+                      leftSection={<IconTrash size={16} />}
+                      variant="filled"
+                      color="red"
+                      size="sm"
+                      onClick={() => onDelete(notification.id)}
+                      radius="md"
+                    >
+                      Confirmer
+                    </Button>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      onClick={() => setDeleteConfirm(null)}
+                      radius="md"
+                    >
+                      Annuler
+                    </Button>
+                  </Group>
+                ) : (
+                  <Tooltip label="Supprimer la notification">
+                    <ActionIcon
+                      variant="light"
+                      color="red"
+                      size="lg"
+                      onClick={() => setDeleteConfirm(notification.id)}
+                      radius="md"
+                    >
+                      <IconTrash size={16} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </>
             ) : (
-              <ActionIcon
-                variant="light"
-                color="red"
-                size="lg"
-                onClick={() => setDeleteConfirm(notification.id)}
-              >
-                <IconTrash size={16} />
-              </ActionIcon>
+              <Text size="sm" c="dimmed" fw={500}>
+                Notification envoyée
+              </Text>
             )}
           </Group>
         </Group>

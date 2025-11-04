@@ -7,7 +7,6 @@ import {
 } from "@/types";
 
 export const notificationService = {
-  // Notifications
   async getNotifications(): Promise<Notification[]> {
     const response = await apiClient.get<Notification[]>("/notifications");
     return response.data;
@@ -45,7 +44,6 @@ export const notificationService = {
     return response.data;
   },
 
-  // Devices
   async registerDeviceToken(
     token: string,
     platform: "ANDROID" | "IOS",

@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   ColorSchemeScript,
   mantineHtmlProps,
@@ -12,10 +12,14 @@ import { theme } from "../../theme";
 
 export const metadata = {
   title: "Grimm Notification Portal",
-  description: "Portal de gestion des notifications push pour Grimm App",
+  description: "Push notification management portal for Grimm App",
 };
 
-export default function RootLayout({ children }: { children: any }) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" {...mantineHtmlProps}>
       <head>

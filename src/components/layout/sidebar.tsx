@@ -1,9 +1,12 @@
 "use client";
 
-import { NavLink, Stack } from "@mantine/core";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconDashboard, IconBell, IconPlus } from "@tabler/icons-react";
+import { IconDashboard, IconBell } from "@tabler/icons-react";
+import { Group } from "@mantine/core";
+import { Logo } from "../ui/logo";
+import { UserButton } from "../ui/user-button";
+import classes from "./sidebar.module.css";
 
 const navigation = [
   {
@@ -28,36 +31,56 @@ export function DashboardSidebar({ onItemClick }: DashboardSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <Stack gap="xs">
-      {navigation.map((item) => {
-        const isActive = pathname === item.href;
+    <nav className={classes.navbar}>
+      {/* Header */}
+      <div style={{ borderBottom: "1.5px solid #e9ecef", marginBottom: 28 }}>
+        <Group justify="center" mb="md">
+          <Logo />
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              background: "#f1f3f5",
+              borderRadius: 4,
+              padding: "2px 8px",
+              color: "#333",
+            }}
+          >
+            Beta
+          </span>
+        </Group>
+      </div>
 
-        return (
-          <NavLink
-            key={item.name}
-            component={Link}
-            href={item.href}
-            label={item.name}
-            description={item.description}
-            leftSection={<item.icon size={20} />}
-            active={isActive}
-            variant="filled"
-            onClick={onItemClick}
-          />
-        );
-      })}
+      {/* Navigation Links */}
+      <div className={classes.links}>
+        <div className={classes.linksInner}>
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
 
-      <NavLink
-        component={Link}
-        href="/notifications/create"
-        label="Nouvelle notification"
-        description="Créer une notification"
-        leftSection={<IconPlus size={20} />}
-        active={pathname === "/notifications/create"}
-        variant="filled"
-        color="blue"
-        onClick={onItemClick}
-      />
-    </Stack>
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`${classes.menuItem} ${isActive ? classes.menuItemActive : ""}`}
+                onClick={onItemClick}
+              >
+                <div className={classes.iconBox}>
+                  <item.icon size={20} color="white" />
+                </div>
+                <span className={classes.labelText}>{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className={classes.footer}>
+        <UserButton
+          onAccountClick={() => console.log("Account")}
+          onLogoutClick={() => console.log("Logout")}
+        />
+      </div>
+    </nav>
   );
 }

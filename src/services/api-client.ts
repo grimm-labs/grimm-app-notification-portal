@@ -2,7 +2,7 @@ import axios from "axios";
 import { notifications } from "@mantine/notifications";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api";
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -12,7 +12,6 @@ export const apiClient = axios.create({
   },
 });
 
-// Intercepteur pour les erreurs amélioré avec Mantine notifications
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -32,19 +31,16 @@ apiClient.interceptors.response.use(
       title: "Erreur",
       message: errorMessage,
       color: "red",
-      // Pas d'icône pour éviter les problèmes JSX
     });
 
     return Promise.reject(error);
   },
 );
 
-// Fonction utilitaire pour les succès
 export const showSuccessNotification = (message: string) => {
   notifications.show({
     title: "Succès",
     message,
     color: "green",
-    // Pas d'icône pour éviter les problèmes JSX
   });
 };

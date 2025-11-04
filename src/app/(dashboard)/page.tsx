@@ -6,7 +6,7 @@ export default function DashboardPage() {
   return (
     <Stack gap="lg">
       <div>
-        <Title order={1}>Tableau de bord</Title>
+        <Title order={1}>Grimm App Notification Portal</Title>
       </div>
 
       <DashboardStats />

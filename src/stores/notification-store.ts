@@ -15,15 +15,16 @@ interface NotificationStore {
 
   // Actions
   fetchNotifications: () => Promise<void>;
-  fetchNotification: (id: string) => Promise<void>;
+  fetchNotification: (id: string) => Promise<Notification>;
   createNotification: (data: CreateNotificationDto) => Promise<void>;
   updateNotification: (
     id: string,
     data: UpdateNotificationDto,
-  ) => Promise<void>;
+  ) => Promise<Notification>;
   deleteNotification: (id: string) => Promise<void>;
   publishNotification: (id: string) => Promise<void>;
   clearError: () => void;
+  clearCurrentNotification: () => void;
 }
 
 // Helper function to get error message
@@ -53,16 +54,18 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
     }
   },
 
-  fetchNotification: async (id: string) => {
+  fetchNotification: async (id: string): Promise<Notification> => {
     set({ isLoading: true, error: null });
     try {
       const notification = await notificationService.getNotification(id);
       set({ currentNotification: notification, isLoading: false });
+      return notification;
     } catch (error) {
       set({
         error: getErrorMessage(error),
         isLoading: false,
       });
+      throw error;
     }
   },
 
@@ -82,17 +85,27 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
     }
   },
 
-  updateNotification: async (id: string, data: UpdateNotificationDto) => {
+  updateNotification: async (
+    id: string,
+    data: UpdateNotificationDto,
+  ): Promise<Notification> => {
     set({ isLoading: true, error: null });
     try {
-      await notificationService.updateNotification(id, data);
+      const updatedNotification = await notificationService.updateNotification(
+        id,
+        data,
+      );
       await get().fetchNotifications();
+      set({ currentNotification: null });
       showSuccessNotification("Notification mise à jour avec succès");
+      return updatedNotification;
     } catch (error) {
+      const message = getErrorMessage(error);
       set({
-        error: getErrorMessage(error),
+        error: message,
         isLoading: false,
       });
+      throw new Error(message);
     }
   },
 
@@ -125,4 +138,5 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   },
 
   clearError: () => set({ error: null }),
+  clearCurrentNotification: () => set({ currentNotification: null }),
 }));

@@ -12,6 +12,9 @@ export const useNotifications = () => {
     deleteNotification,
     publishNotification,
     clearError,
+    fetchNotification,
+    currentNotification,
+    clearCurrentNotification,
   } = useNotificationStore();
 
   useEffect(() => {
@@ -28,5 +31,8 @@ export const useNotifications = () => {
     publishNotification,
     clearError,
     refetch: fetchNotifications,
+    fetchNotification,
+    currentNotification,
+    clearCurrentNotification,
   };
 };
