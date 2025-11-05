@@ -74,7 +74,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
     try {
       await notificationService.createNotification(data);
       await get().fetchNotifications();
-      showSuccessNotification("Notification créée avec succès");
+      showSuccessNotification("Notification created successfully");
     } catch (error) {
       const message = getErrorMessage(error);
       set({
@@ -97,7 +97,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
       );
       await get().fetchNotifications();
       set({ currentNotification: null });
-      showSuccessNotification("Notification mise à jour avec succès");
+      showSuccessNotification("Notification updated successfully");
       return updatedNotification;
     } catch (error) {
       const message = getErrorMessage(error);
@@ -114,7 +114,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
     try {
       await notificationService.deleteNotification(id);
       await get().fetchNotifications();
-      showSuccessNotification("Notification supprimée avec succès");
+      showSuccessNotification("Notification deleted successfully");
     } catch (error) {
       set({
         error: getErrorMessage(error),
@@ -128,7 +128,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
     try {
       await notificationService.publishNotification(id);
       await get().fetchNotifications();
-      showSuccessNotification("Notification publiée avec succès");
+      showSuccessNotification("Notification published successfully");
     } catch (error) {
       set({
         error: getErrorMessage(error),

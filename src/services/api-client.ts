@@ -15,20 +15,20 @@ export const apiClient = axios.create({
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    let errorMessage = "Une erreur est survenue";
+    let errorMessage = "An error occurred";
 
     if (error.code === "ECONNREFUSED") {
       errorMessage =
-        "Impossible de se connecter au serveur API. Vérifiez que le serveur est démarré.";
+        "Unable to connect to the API server. Please check that the server is running.";
     } else if (error.response) {
       errorMessage =
-        error.response.data?.message || `Erreur ${error.response.status}`;
+        error.response.data?.message || `Error ${error.response.status}`;
     } else if (error.request) {
-      errorMessage = "Aucune réponse du serveur";
+      errorMessage = "No response from server";
     }
 
     notifications.show({
-      title: "Erreur",
+      title: "Error",
       message: errorMessage,
       color: "red",
     });
@@ -39,7 +39,7 @@ apiClient.interceptors.response.use(
 
 export const showSuccessNotification = (message: string) => {
   notifications.show({
-    title: "Succès",
+    title: "Success",
     message,
     color: "green",
   });

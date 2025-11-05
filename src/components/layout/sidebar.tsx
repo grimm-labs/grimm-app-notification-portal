@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { IconDashboard, IconBell } from "@tabler/icons-react";
 import { Group } from "@mantine/core";
 import { Logo } from "../ui/logo";
-import { UserButton } from "../ui/user-button";
 import classes from "./sidebar.module.css";
 
 const navigation = [
@@ -13,13 +12,13 @@ const navigation = [
     name: "Dashboard",
     href: "/",
     icon: IconDashboard,
-    description: "Vue d'ensemble",
+    description: "Overview",
   },
   {
     name: "Notifications",
     href: "/notifications",
     icon: IconBell,
-    description: "Gérer les notifications",
+    description: "Manage notifications",
   },
 ];
 
@@ -40,14 +39,12 @@ export function DashboardSidebar({ onItemClick }: DashboardSidebarProps) {
             style={{
               fontSize: 12,
               fontWeight: 700,
-              background: "#f1f3f5",
+              background: "#fff",
               borderRadius: 4,
               padding: "2px 8px",
               color: "#333",
             }}
-          >
-            Beta
-          </span>
+          ></span>
         </Group>
       </div>
 
@@ -72,14 +69,6 @@ export function DashboardSidebar({ onItemClick }: DashboardSidebarProps) {
             );
           })}
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className={classes.footer}>
-        <UserButton
-          onAccountClick={() => console.log("Account")}
-          onLogoutClick={() => console.log("Logout")}
-        />
       </div>
     </nav>
   );

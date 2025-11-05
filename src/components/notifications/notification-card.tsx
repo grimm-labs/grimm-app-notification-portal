@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { IconSend, IconTrash, IconEdit } from "@tabler/icons-react";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 
 interface NotificationCardProps {
   notification: Notification;
@@ -37,7 +37,6 @@ export function NotificationCard({
 
   return (
     <Card
-      shadow="sm"
       padding="lg"
       radius="lg"
       withBorder
@@ -63,22 +62,26 @@ export function NotificationCard({
             size="lg"
             radius="sm"
           >
-            {isDraft ? "Brouillon" : "Publiée"}
+            {isDraft ? "Draft" : "Published"}
           </Badge>
         </Group>
 
         <Group justify="space-between" align="center">
           <Text size="xs" c="dimmed">
-            Créée le{" "}
-            {format(new Date(notification.createdAt), "dd MMMM yyyy à HH:mm", {
-              locale: fr,
-            })}
+            Created on{" "}
+            {format(
+              new Date(notification.createdAt),
+              "dd MMMM yyyy 'at' HH:mm",
+              {
+                locale: enUS,
+              },
+            )}
           </Text>
 
           <Group gap="xs">
             {isDraft ? (
               <>
-                <Tooltip label="Modifier la notification">
+                <Tooltip label="Edit notification">
                   <ActionIcon
                     variant="light"
                     color="blue"
@@ -90,7 +93,7 @@ export function NotificationCard({
                   </ActionIcon>
                 </Tooltip>
 
-                <Tooltip label="Modifier la notification">
+                <Tooltip label="Publish notification">
                   <ActionIcon
                     variant="light"
                     color="green"
@@ -112,7 +115,7 @@ export function NotificationCard({
                       onClick={() => onDelete(notification.id)}
                       radius="md"
                     >
-                      Confirmer
+                      Confirm
                     </Button>
                     <Button
                       variant="default"
@@ -120,11 +123,11 @@ export function NotificationCard({
                       onClick={() => setDeleteConfirm(null)}
                       radius="md"
                     >
-                      Annuler
+                      Cancel
                     </Button>
                   </Group>
                 ) : (
-                  <Tooltip label="Supprimer la notification">
+                  <Tooltip label="Delete notification">
                     <ActionIcon
                       variant="light"
                       color="red"
@@ -139,7 +142,7 @@ export function NotificationCard({
               </>
             ) : (
               <Text size="sm" c="dimmed" fw={500}>
-                Notification envoyée
+                Notification sent
               </Text>
             )}
           </Group>

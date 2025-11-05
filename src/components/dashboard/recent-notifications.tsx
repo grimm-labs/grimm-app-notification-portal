@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import { IconBell, IconArrowRight, IconEye } from "@tabler/icons-react";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 
 export function RecentNotifications() {
   const { notifications, isLoading } = useNotifications();
@@ -27,7 +27,7 @@ export function RecentNotifications() {
   };
 
   const getStatusLabel = (status: string) => {
-    return status === "PUBLISHED" ? "Publiée" : "Brouillon";
+    return status === "PUBLISHED" ? "Published" : "Draft";
   };
 
   return (
@@ -44,10 +44,10 @@ export function RecentNotifications() {
             </ThemeIcon>
             <div>
               <Text fw={700} size="lg">
-                Notifications récentes
+                Recent Notifications
               </Text>
               <Text size="sm" c="dimmed">
-                Dernières activités de notification
+                Latest notification activities
               </Text>
             </div>
           </Group>
@@ -58,7 +58,7 @@ export function RecentNotifications() {
             variant="light"
             color="blue"
             size="lg"
-            title="Voir toutes les notifications"
+            title="View all notifications"
           >
             <IconArrowRight size={18} />
           </ActionIcon>
@@ -76,7 +76,7 @@ export function RecentNotifications() {
               <IconBell size={24} />
             </ThemeIcon>
             <Text c="dimmed" ta="center">
-              Aucune notification créée pour le moment
+              No notifications created yet
             </Text>
           </Stack>
         ) : (
@@ -108,9 +108,9 @@ export function RecentNotifications() {
                     <Text size="xs" c="dimmed">
                       {format(
                         new Date(notification.createdAt),
-                        "dd MMM yyyy 'à' HH:mm",
+                        "dd MMM yyyy 'at' HH:mm",
                         {
-                          locale: fr,
+                          locale: enUS,
                         },
                       )}
                     </Text>

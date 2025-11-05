@@ -34,7 +34,7 @@ export function NotificationForm({
   onCancel,
   isLoading = false,
   initialData,
-  submitButtonText = "Créer la notification",
+  submitButtonText = "Create notification",
 }: NotificationFormProps) {
   const form = useForm<NotificationFormData>({
     initialValues: {
@@ -43,15 +43,14 @@ export function NotificationForm({
     },
     validate: {
       title: (value) => {
-        if (!value.trim()) return "Le titre est requis";
-        if (value.length > 100)
-          return "Le titre ne peut pas dépasser 100 caractères";
+        if (!value.trim()) return "Title is required";
+        if (value.length > 100) return "Title cannot exceed 100 characters";
         return null;
       },
       body: (value) => {
-        if (!value.trim()) return "Le contenu est requis";
+        if (!value.trim()) return "Content is required";
         if (value.length > MAX_BODY_LENGTH)
-          return `Le contenu ne peut pas dépasser ${MAX_BODY_LENGTH} caractères`;
+          return `Content cannot exceed ${MAX_BODY_LENGTH} characters`;
         return null;
       },
     },
@@ -71,26 +70,26 @@ export function NotificationForm({
         <Stack gap="lg">
           <Box>
             <Text fw={500} mb="xs" size="sm">
-              Titre de la notification *
+              Notification title *
             </Text>
             <TextInput
-              placeholder="Entrez un titre..."
+              placeholder="Enter a title..."
               required
               size="md"
               radius="md"
               {...form.getInputProps("title")}
             />
             <Text size="xs" c="dimmed" mt={4}>
-              {form.values.title.length}/100 caractères
+              {form.values.title.length}/100 characters
             </Text>
           </Box>
 
           <Box>
             <Text fw={500} mb="xs" size="sm">
-              Contenu de la notification *
+              Notification content *
             </Text>
             <Textarea
-              placeholder="Décrivez le contenu de votre notification..."
+              placeholder="Describe the content of your notification..."
               required
               minRows={4}
               size="md"
@@ -100,11 +99,11 @@ export function NotificationForm({
             <Box mt="xs">
               <Group justify="space-between" mb={4}>
                 <Text size="sm" c="dimmed">
-                  {bodyLength} / {MAX_BODY_LENGTH} caractères
+                  {bodyLength} / {MAX_BODY_LENGTH} characters
                 </Text>
                 {isBodyOverLimit && (
                   <Text size="sm" c="red">
-                    Trop long
+                    Too long
                   </Text>
                 )}
               </Group>
@@ -131,7 +130,7 @@ export function NotificationForm({
               size="md"
               radius="md"
             >
-              Annuler
+              Cancel
             </Button>
             <Button
               type="submit"

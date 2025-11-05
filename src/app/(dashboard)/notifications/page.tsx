@@ -86,15 +86,14 @@ export default function NotificationsPage() {
       <Stack gap="lg">
         <Group justify="space-between">
           <div>
-            <Title order={1}>Gestion des notifications</Title>
+            <Title order={1}>Notification Management</Title>
             <Text c="dimmed" mt={4}>
-              Créez et gérez les notifications push pour l&apos;application
-              Grimm
+              Create and manage push notifications for the Grimm app
             </Text>
           </div>
 
           <Button leftSection={<IconPlus size={16} />} onClick={handleCreate}>
-            Nouvelle notification
+            New Notification
           </Button>
         </Group>
 
@@ -107,13 +106,13 @@ export default function NotificationsPage() {
               </Text>
             </Group>
             <Group gap="xs">
-              <Text fw={500}>Publiées:</Text>
+              <Text fw={500}>Published:</Text>
               <Text fw={700} c="green">
                 {publishedCount}
               </Text>
             </Group>
             <Group gap="xs">
-              <Text fw={500}>Brouillons:</Text>
+              <Text fw={500}>Drafts:</Text>
               <Text fw={700} c="orange">
                 {draftCount}
               </Text>
@@ -125,7 +124,7 @@ export default function NotificationsPage() {
           <Alert
             variant="light"
             color="red"
-            title="Erreur"
+            title="Error"
             icon={<IconAlertCircle />}
           >
             {error}
@@ -147,7 +146,9 @@ export default function NotificationsPage() {
         opened={modalOpened}
         onClose={handleModalClose}
         title={
-          isEditing ? "Modifier la notification" : "Créer une notification"
+          <Text fw={700}>
+            {isEditing ? "Edit Notification" : "Create Notification"}
+          </Text>
         }
         size="lg"
         centered
@@ -159,7 +160,7 @@ export default function NotificationsPage() {
           isLoading={isLoading}
           initialData={currentNotification || undefined}
           submitButtonText={
-            isEditing ? "Modifier la notification" : "Créer la notification"
+            isEditing ? "Edit Notification" : "Create Notification"
           }
         />
       </Modal>

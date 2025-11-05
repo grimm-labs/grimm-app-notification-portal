@@ -40,10 +40,10 @@ export function NotificationList({
             <IconInbox size={48} color="#868e96" />
             <div>
               <Text size="xl" fw={600} c="dimmed" ta="center">
-                Aucune notification
+                No notifications
               </Text>
               <Text c="dimmed" ta="center" mt={4}>
-                Commencez par créer votre première notification.
+                Start by creating your first notification.
               </Text>
             </div>
           </Stack>
@@ -56,13 +56,13 @@ export function NotificationList({
     <Stack gap="md">
       <Text size="sm" c="dimmed">
         {notifications.length} notification{notifications.length > 1 ? "s" : ""}{" "}
-        au total
+        in total
         {notifications.some((n) => n.status === "DRAFT") && (
           <>
             {" "}
             •{" "}
             <Text span c="orange">
-              Les brouillons peuvent être modifiés
+              Drafts can be edited
             </Text>
           </>
         )}
