@@ -40,10 +40,10 @@ export function NotificationList({
             <IconInbox size={48} color="#868e96" />
             <div>
               <Text size="xl" fw={600} c="dimmed" ta="center">
-                No notifications
+                No notifications found
               </Text>
               <Text c="dimmed" ta="center" mt={4}>
-                Start by creating your first notification.
+                {`Try changing your filters or create a new notification.`}
               </Text>
             </div>
           </Stack>
@@ -55,8 +55,8 @@ export function NotificationList({
   return (
     <Stack gap="md">
       <Text size="sm" c="dimmed">
-        {notifications.length} notification{notifications.length > 1 ? "s" : ""}{" "}
-        in total
+        Showing {notifications.length} notification
+        {notifications.length > 1 ? "s" : ""}
         {notifications.some((n) => n.status === "DRAFT") && (
           <>
             {" "}
